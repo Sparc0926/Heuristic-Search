@@ -6,8 +6,8 @@ struct map* m = (void*)0;  // map to be searched on
 int row, col;              // number of rows and columns of map
 int src, tar;              // source and target index
 
-char dx[8] = { 1,  1,  0, -1, -1, -1, 0, 1},
-     dy[8] = { 0, -1, -1, -1,  0,  1, 1, 1};
+int dx[8] = { 1,  1,  0, -1, -1, -1, 0, 1},
+    dy[8] = { 0, -1, -1, -1,  0,  1, 1, 1};
 
 void load_map(struct map* m_, int row_, int col_)
 {
@@ -57,14 +57,14 @@ void get_path(int* path)
 // debug functions
 void write_path(char* map)
 {
-    FILE* f = fopen("test.map", "w");
-    for (int i = 0; i < row * col; i++) {
-        if (m[i].s == EXPND)  map[i] = 'e';
-        else if (m[i].s == VISED)  map[i] = 'v';
-    }
-    //for (int i = m[tar].p; i != src; i = m[i].p) {
-    //    map[i] = 'p';
+    FILE* f = fopen("output.txt", "w");
+    //for (int i = 0; i < row * col; i++) {
+    //    if (m[i].s == EXPND)  map[i] = 'e';
+    //    else if (m[i].s == VISED)  map[i] = 'v';
     //}
+    for (int i = m[tar].p; i != src; i = m[i].p) {
+        map[i] = 'p';
+    }
     map[src] = 's', map[tar] = 't';
     for(int i = 0; i < row; i++) {
         for (int j = 0; j < col; j++) {

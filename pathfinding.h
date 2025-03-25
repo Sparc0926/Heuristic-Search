@@ -20,7 +20,7 @@ struct map {
 extern struct map* m;      // map to be searched on
 extern int row, col;       // number of rows and columns of m
 extern int src, tar;       // indices of source and target cells
-extern char dx[8], dy[8];  // 8 directions an agend will go
+extern int dx[8], dy[8];  // 8 directions an agend will go
 
 /// @brief initialize m, row, col with a specific map
 /// @param m_ pointer to map array

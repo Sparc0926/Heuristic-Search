@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <pathfinding.h>
+#include <time.h>
+#include <unistd.h>
 
 int main()
 {
     int row, col, src, tar;
-    FILE* map_src = fopen("dao-map/rmtst01.map", "r");
+    FILE* map_src = fopen("dao-map/den510d.map", "r");
     fscanf(map_src, "type octile\nheight %d\nwidth %d\nmap\n", &row, &col);
     // read in map as a string
     char str_m[row * col], tmp;
@@ -26,7 +28,20 @@ int main()
     // begin pathfinding
     load_map(m, row, col);
     set_src_tar(src, tar);
-    printf("%.1f\n", a_star());
+    time_t begin = time(NULL);
+    int n = 1000;
+    float cost;
+    while (n--) {
+        str_m[src] = str_m[tar] = '.';
+        for (int i = 0; i < row * col; i++) {
+            if (str_m[i] == '.')  m[i].s = UNVIS;
+            else  m[i].s = BLKED;
+        }
+        load_map(m, row, col);
+        cost = dijkstra();
+    }
+    time_t end = time(NULL);
+    printf("%.1f, it runs in %lf s\n", cost, difftime(end, begin));
     write_path(str_m);
 
     return 0;

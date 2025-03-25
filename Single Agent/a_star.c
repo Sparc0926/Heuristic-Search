@@ -1,6 +1,5 @@
 #include <pathfinding.h>
 #include <iheap.h>
-#include <stdio.h>
 
 static iheap _iheap;
 static float _cmp(int i, int j)
