@@ -57,10 +57,6 @@ float a_star();
 /// @return minimal cost if path found, -1.0f if not found
 float jump_point_search();
 
-/// @brief build founded path and store it in path[]
-/// @param path array to store path
-void get_path(int* path);
-
 // debug functions
 void write_path(char* map);
 void write_map();

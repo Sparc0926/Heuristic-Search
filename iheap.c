@@ -38,8 +38,7 @@ int iheap_pop(iheap* heap)
 {
     int popped = heap->head[1];    // popped element
     int last = heap->head[heap->cnt--];
-    int i = 1;                     // index of swapping element
-    int j = heap->cnt >> 1;        // last parent index
+    int i = 1, j = heap->cnt >> 1;
     while (i <= j) {
         int min = i << 1;
         if ((min | 1) <= heap->cnt && heap->cmp(heap->head[min | 1], heap->head[min]) < 0.0f) {

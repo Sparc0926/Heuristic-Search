@@ -7,7 +7,7 @@ int main()
 {
     //da2-map/w_sundermount.map
     int row, col, src, tar;
-    FILE* map_src = fopen("dao-map/lak100n.map", "r");
+    FILE* map_src = fopen("da2-map/ht_0_hightown_a2.map", "r");
     fscanf(map_src, "type octile\nheight %d\nwidth %d\nmap\n", &row, &col);
     // read in map as a string
     char* str_m = (char*)malloc(row * col * sizeof(char)), tmp;
@@ -31,7 +31,7 @@ int main()
     set_src_tar(src, tar);
     float cost;
     time_t begin = time(NULL);
-    cost = a_star();
+    cost = jump_point_search();
     time_t end = time(NULL);
     printf("%.1f, it runs in %lf s\n", cost, difftime(end, begin));
     write_path(str_m);

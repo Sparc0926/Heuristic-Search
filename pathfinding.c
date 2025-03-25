@@ -44,16 +44,6 @@ void set_h(int cur, enum h_type h_t)
     }
 }
 
-void get_path(int* path)
-{
-    //int cnt = 0;
-    printf("%d ", tar);
-    for (int i = m[tar].p; i != src; i = m[i].p) {
-        printf("%d ", i);
-    }
-    printf("%d\n", src);
-}
-
 // debug functions
 void write_path(char* map)
 {
@@ -62,8 +52,11 @@ void write_path(char* map)
     //    if (m[i].s == EXPND)  map[i] = 'e';
     //    else if (m[i].s == VISED)  map[i] = 'v';
     //}
-    for (int i = m[tar].p; i != src; i = m[i].p) {
-        map[i] = 'p';
+    for (int i = tar; i != src; i = m[i].p) {
+        int dx_ = NORM(m[i].p % col - i % col),
+            dy_ = NORM(m[i].p / col - i / col);
+        for (int j = i; j != m[i].p; j += dx_ + dy_ * col)
+            map[j] = 'p';
     }
     map[src] = 's', map[tar] = 't';
     for(int i = 0; i < row; i++) {
