@@ -7,7 +7,7 @@
 /// @return <0 if arr[i] priors to arr[j], =0 if they are of
 /// @return the same priority, >0 if arr[j] priors to arr[i]
 /// @return where arr is the array on which index heap is built
-typedef int(*cmp_)(int, int);
+typedef float(*cmp_)(int, int);
 typedef struct iheap_ iheap;
 
 struct iheap_ {

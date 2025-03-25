@@ -6,7 +6,7 @@ float breadth_first_search()
     queue[0] = src;
     m[src].g = 0;
     do {
-        m[queue[head]].s = EXPND;  // mark expanded
+        m[queue[head]].s = BLKED;  // mark expanded
         for (int i = 0; i < 4; i++) {
             int cur = queue[head++];
             int suc = cur + dy[i] * col + dx[i];
@@ -21,7 +21,7 @@ float breadth_first_search()
                 m[suc].g = w;
                 m[suc].p = cur;
             }
-            if (m[tar].s == EXPND)  return m[tar].g;
+            if (m[tar].s == BLKED)  return m[tar].g;
         }
     } while (head != tail);
     return -1.0f;

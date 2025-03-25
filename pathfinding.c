@@ -12,6 +12,14 @@ char dx[8] = { 1,  1,  0, -1, -1, -1, 0, 1},
 void load_map(struct map* m_, int row_, int col_)
 {
     m = m_, row = row_, col = col_;
+    for (int i = 0; i < row * col; i++) {
+        m[i].g = 0;      // initialize g value to 0
+        m[i].h = 0;
+        m[i].d = 0;      // initialize directions bitmask to 0
+    }
+    for (int i = 0; i < 8; i++)
+        dy[i] = dy[i] < 0 ? -col : dy[i] ? col : 0;
+    // TODO: benhcmark multiplication over -1 and 1 and ternary opration.
 }
 
 void set_src_tar(int src_, int tar_)
@@ -46,15 +54,36 @@ void get_path(int* path)
     printf("%d\n", src);
 }
 
+// debug functions
 void write_path(char* map)
 {
-    map[src] = 's', map[tar] = 't';
-    for (int i = m[tar].p; i != src; i = m[i].p) {
-        map[i] = 'p';
+    FILE* f = fopen("test.map", "w");
+    for (int i = 0; i < row * col; i++) {
+        if (m[i].s == EXPND)  map[i] = 'e';
+        else if (m[i].s == VISED)  map[i] = 'v';
     }
+    //for (int i = m[tar].p; i != src; i = m[i].p) {
+    //    map[i] = 'p';
+    //}
+    map[src] = 's', map[tar] = 't';
     for(int i = 0; i < row; i++) {
         for (int j = 0; j < col; j++) {
-            printf("%c ", map[j + i * col]);
+            fprintf(f, "%c", map[j + i * col]);
+        }
+        fprintf(f, "\n");
+    }
+    fclose(f);
+}
+
+void write_map()
+{
+    for(int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            if (m[j + i * col].s == BLKED) {
+                printf("%5.1f", -1.0);
+                continue;
+            }
+            printf("%5.1f", m[j + i * col].g);
         }
         printf("\n");
     }

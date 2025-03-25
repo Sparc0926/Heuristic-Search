@@ -1,5 +1,6 @@
 #include <iheap.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 void create_iheap(iheap* heap, int size, cmp_ cmp)
 {
@@ -12,7 +13,7 @@ void create_iheap(iheap* heap, int size, cmp_ cmp)
 void iheap_update(iheap* heap, int tar)
 {
     int i = heap->hash[tar];
-    while (i != 1 && heap->cmp(tar, heap->head[i >> 1]) < 0) {
+    while (i != 1 && heap->cmp(tar, heap->head[i >> 1]) < 0.0f) {
         heap->head[i] = heap->head[i >> 1];
         heap->hash[heap->head[i]] = i;
         i >>= 1;
@@ -24,7 +25,7 @@ void iheap_update(iheap* heap, int tar)
 void iheap_push(iheap* heap, int tar)
 {
     int i = ++heap->cnt;
-    while (i >> 1 && heap->cmp(tar, heap->head[i >> 1]) < 0) {
+    while (i >> 1 && heap->cmp(tar, heap->head[i >> 1]) < 0.0f) {
         heap->head[i] = heap->head[i >> 1];
         heap->hash[heap->head[i]] = i;
         i >>= 1;
@@ -41,10 +42,10 @@ int iheap_pop(iheap* heap)
     int j = heap->cnt >> 1;        // last parent index
     while (i <= j) {
         int min = i << 1;
-        if ((min | 1) <= heap->cnt && heap->cmp(heap->head[min | 1], heap->head[min]) < 0) {
+        if ((min | 1) <= heap->cnt && heap->cmp(heap->head[min | 1], heap->head[min]) < 0.0f) {
             min |= 1;
         }
-        if (heap->cmp(heap->head[min], last) < 0) {
+        if (heap->cmp(heap->head[min], last) < 0.0f) {
             heap->head[i] = heap->head[min];
             heap->hash[heap->head[i]] = i;
         }

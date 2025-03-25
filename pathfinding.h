@@ -4,18 +4,17 @@
 #define SQRT_2     1.5f
 #define MIN(A, B)  ((A) < (B) ? (A) : (B))
 #define MAX(A, B)  ((A) < (B) ? (B) : (A))
-#define ABS(A)     (A) < 0 ? -(A) : (A)
+#define ABS(A)     ((A) < 0 ? -(A) : (A))
+#define NORM(A)    ((A) < 0 ? -1 : (A) ? 1 : 0)
 
 enum status { UNVIS, VISED, EXPND, BLKED };
 enum h_type { MANHATTAN, OCTILE };
 
 struct map {
-    float g, h;     // g value and h value
-    enum status s;  // status
-    int p;          // parent
-    // jump point preprocess attribute
-    // starts at <- counter-clockwise
-    int jp_attrib[8];
+    float g, h;       // g value and h value
+    enum status s;    // status
+    int p;            // parent
+    unsigned char d;  // bitmask of directions (in index of dx[], dy[]])
 };
 
 extern struct map* m;      // map to be searched on
@@ -62,7 +61,9 @@ float jump_point_search();
 /// @param path array to store path
 void get_path(int* path);
 
+// debug functions
 void write_path(char* map);
+void write_map();
 
 #endif//PATHFINDING_H
 

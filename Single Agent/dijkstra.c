@@ -2,7 +2,7 @@
 #include <iheap.h>
 
 static iheap _iheap;
-static int _cmp(int i, int j)
+static float _cmp(int i, int j)
     { return m[i].g - m[j].g; }
 
 /// @brief update attributes of m[suc]
@@ -31,16 +31,16 @@ float dijkstra()
     iheap_push(&_iheap, src);
     while (_iheap.cnt) {  // heap not empty
         int cur = iheap_pop(&_iheap);
+        if (cur == tar) {
+            destroy_iheap(&_iheap);
+            return m[tar].g;
+        }
         m[cur].s = EXPND;
         for (int i = 0; i < 8; i++) {
             update_cell(cur,
-                cur + dx[i] + dy[i] * col,
+                cur + dx[i] + dy[i],
                 m[cur].g + (i & 1 ? SQRT_2 : 1.0f)
             );
-        }
-        if (m[tar].s == EXPND) {
-            destroy_iheap(&_iheap);
-            return m[tar].g;
         }
     }
     destroy_iheap(&_iheap);
