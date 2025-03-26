@@ -3,7 +3,6 @@
 // You may use, distribute and modify this code under the
 // terms of the MIT license, for details, see LICENCE.md
 #include <pathfinding.h>
-#include <iheap.h>
 #include <stdio.h>
 
 struct map* m = (void*)0;  // map to be searched on

@@ -5,6 +5,8 @@
 #ifndef IHEAP_H
 #define IHEAP_H
 
+#include <stdlib.h>
+
 /// @brief Comparison function used in heap operations,
 /// @param i the first index
 /// @param j the second index

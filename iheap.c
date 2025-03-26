@@ -3,8 +3,6 @@
 // You may use, distribute and modify this code under the
 // terms of the MIT license, for details, see LICENCE.md
 #include <iheap.h>
-#include <stdlib.h>
-#include <stdio.h>
 
 void create_iheap(iheap* heap, int size, cmp_ cmp)
 {
