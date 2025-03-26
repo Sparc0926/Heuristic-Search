@@ -7,9 +7,10 @@
 
 # override of built macros
 CC = @ gcc
-CFLAGS = -I ./ -Wall -Wno-unused-result -O2 -flto
+CFLAGS = -I ./ -Wall -Wno-unused-result -Wno-switch -O2 -flto
 LINK.c = $(CC) $(CFLAGS)
 COMPILE.c = $(LINK.c) -c
+OUTPUT_OPTION = -o $(@F)
 RM = @ rm -f
 # algorithms to file
 dij = dijkstra
@@ -27,28 +28,19 @@ all:
 	@ echo "To run Jump Point Search ------- type [make jps]."
 	@ echo "To run Cooperative A* ---------- type [make ca*]."
 	@ echo "To run Conflict Based Search --- type [make cbs]."
-	$(RM) *.o a.exe
+	$(RM) *.o *.exe *.ppm
 
-dij: iheap.o pathfinding.o
-	$(COMPILE.c) "Single Agent"/$($@).c -o $($@).o
-	$(CC) -D $($@)_D $(CFLAGS) -c main.c -o main.o
-	$(LINK.c) *.o -o a.exe
-	@ echo "Running Dijkstra"
-	@ ./a.exe
-	$(RM) *.o a.exe
+dij: Single-Agent/$(dij).o
+bfs: Single-Agent/$(bfs).o
+a*: Single-Agent/$(a*).o
+jps: Single-Agent/$(jps).o
 
-a*: iheap.o pathfinding.o
-	$(COMPILE.c) "Single Agent"/$($@).c -o $($@).o
-	$(CC) -D $($@)_D $(CFLAGS) -c main.c -o main.o
-	$(LINK.c) *.o -o a.exe
-	@ echo "Running A*"
-	@ ./a.exe
-	$(RM) *.o a.exe
+ca*: Multi-Agent/$(ca*).o
+cbs: Multi-Agent/$(cbs).o
 
-jps: iheap.o pathfinding.o
-	$(COMPILE.c) "Single Agent"/$($@).c -o $($@).o
-	$(CC) -D $($@)_D $(CFLAGS) -c main.c -o main.o
+%: iheap.o pathfinding.o
+	$(COMPILE.c) -o main.o -D $($@)_D main.c
 	$(LINK.c) *.o -o a.exe
-	@ echo "Running Jump Point Search"
+	@ echo "Running $($@)"
 	@ ./a.exe
-	$(RM) *.o a.exe
+	$(RM) *.o *.exe

@@ -32,7 +32,7 @@ int main()
     // begin pathfinding
     load_map(m, row, col);
     set_src_tar(src, tar);
-    float cost;
+    float cost = 0.0f;
     //time_t begin = time(NULL);
     #ifdef dijkstra_D
     cost = dijkstra();
