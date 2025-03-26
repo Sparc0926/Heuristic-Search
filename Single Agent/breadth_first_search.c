@@ -20,12 +20,10 @@ float breadth_first_search()
                 m[suc].g = w;
                 m[suc].p = cur;
                 m[suc].s = VISED;  // mark visited
-            }
-            else if (m[suc].s == VISED && w < m[suc].g) {
+            } else if (m[suc].s == VISED && w < m[suc].g) {
                 m[suc].g = w;
                 m[suc].p = cur;
-            }
-            if (m[tar].s == BLKED)  return m[tar].g;
+            } if (m[tar].s == BLKED)  return m[tar].g;
         }
     } while (head != tail);
     return -1.0f;

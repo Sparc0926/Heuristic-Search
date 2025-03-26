@@ -50,21 +50,30 @@ void set_h(int cur, enum h_type h_t)
 // debug functions
 void write_path(char* map)
 {
-    FILE* f = fopen("output.txt", "w");
-    //for (int i = 0; i < row * col; i++) {
-    //    if (m[i].s == EXPND)  map[i] = 'e';
-    //    else if (m[i].s == VISED)  map[i] = 'v';
-    //}
+    FILE* f = fopen("output.ppm", "w");
+    for (int i = 0; i < row * col; i++) {
+        if (m[i].s == EXPND)  map[i] = 'e';
+        else if (m[i].s == VISED)  map[i] = 'v';
+    }
+    fprintf(f, "P3\n%d %d\n255\n", col, row);
     for (int i = tar; i != src; i = m[i].p) {
-        //int dx_ = NORM(m[i].p % col - i % col),
-        //    dy_ = NORM(m[i].p / col - i / col);
-        //for (int j = i; j != m[i].p; j += dx_ + dy_ * col)
-            map[i] = 'p';
+        int dx_ = NORM(m[i].p % col - i % col),
+            dy_ = NORM(m[i].p / col - i / col);
+        for (int j = i; j != m[i].p; j += dx_ + dy_ * col)
+            map[j] = 'p';
     }
     map[src] = 's', map[tar] = 't';
     for(int i = 0; i < row; i++) {
         for (int j = 0; j < col; j++) {
-            fprintf(f, "%c", map[j + i * col]);
+            switch (map[j + i * col]) {
+                case 'T': fprintf(f, "0 255 0 "); break;
+                case '@': fprintf(f, "125 125 125 "); break;
+                case '.': fprintf(f, "255 255 255 "); break;
+                case 'v': fprintf(f, "255 255 0 "); break;
+                case 'e': fprintf(f, "255 0 0 "); break;
+                case 'p': fprintf(f, "0 0 255 "); break;
+                default: fprintf(f, "255 255 255 "); break;
+            }
         }
         fprintf(f, "\n");
     }

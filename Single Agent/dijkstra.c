@@ -18,8 +18,7 @@ static void update_cell(int cur, int suc, float w)
         m[suc].s = VISED;
         m[suc].p = cur;
         iheap_push(&ih, suc);
-    }
-    else if (m[suc].s == VISED && w < m[suc].g) {
+    } else if (m[suc].s == VISED && w < m[suc].g) {
         m[suc].g = w;
         m[suc].p = cur;
         iheap_update(&ih, suc);
