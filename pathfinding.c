@@ -1,3 +1,7 @@
+// Copyright (C) March 2025 杨锦熠 - All rights reserved
+//
+// You may use, distribute and modify this code under the
+// terms of the MIT license, for details, see LICENCE.md
 #include <pathfinding.h>
 #include <iheap.h>
 #include <stdio.h>
@@ -5,7 +9,8 @@
 struct map* m = (void*)0;  // map to be searched on
 int row, col;              // number of rows and columns of map
 int src, tar;              // source and target index
-
+iheap ih;                  // index heap used in search
+// directions that a cell can reach
 int dx[8] = { 1,  1,  0, -1, -1, -1, 0, 1},
     dy[8] = { 0, -1, -1, -1,  0,  1, 1, 1};
 
@@ -13,8 +18,6 @@ void load_map(struct map* m_, int row_, int col_)
 {
     m = m_, row = row_, col = col_;
     for (int i = 0; i < row * col; i++) {
-        m[i].g = 0;      // initialize g value to 0
-        m[i].h = 0;
         m[i].d = 0;      // initialize directions bitmask to 0
     }
     for (int i = 0; i < 8; i++)
@@ -53,10 +56,10 @@ void write_path(char* map)
     //    else if (m[i].s == VISED)  map[i] = 'v';
     //}
     for (int i = tar; i != src; i = m[i].p) {
-        int dx_ = NORM(m[i].p % col - i % col),
-            dy_ = NORM(m[i].p / col - i / col);
-        for (int j = i; j != m[i].p; j += dx_ + dy_ * col)
-            map[j] = 'p';
+        //int dx_ = NORM(m[i].p % col - i % col),
+        //    dy_ = NORM(m[i].p / col - i / col);
+        //for (int j = i; j != m[i].p; j += dx_ + dy_ * col)
+            map[i] = 'p';
     }
     map[src] = 's', map[tar] = 't';
     for(int i = 0; i < row; i++) {

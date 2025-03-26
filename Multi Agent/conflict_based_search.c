@@ -1,6 +1,6 @@
 #include <pathfinding.h>
 
-float cooperative_a_star()
+float confict_based_search()
 {
     // TODO
 }

@@ -1,5 +1,11 @@
+// Copyright (C) March 2025 杨锦熠 - All rights reserved
+//
+// You may use, distribute and modify this code under the
+// terms of the MIT license, for details, see LICENCE.md
 #ifndef PATHFINDING_H
 #define PATHFINDING_H
+
+#include <iheap.h>
 
 #define SQRT_2     1.5f
 #define MIN(A, B)  ((A) < (B) ? (A) : (B))
@@ -20,7 +26,8 @@ struct map {
 extern struct map* m;      // map to be searched on
 extern int row, col;       // number of rows and columns of m
 extern int src, tar;       // indices of source and target cells
-extern int dx[8], dy[8];  // 8 directions an agend will go
+extern iheap ih;           // index heap used in search
+extern int dx[8], dy[8];   // 8 directions an agend will go
 
 /// @brief initialize m, row, col with a specific map
 /// @param m_ pointer to map array

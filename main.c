@@ -1,3 +1,7 @@
+// Copyright (C) March 2025 杨锦熠 - All rights reserved
+//
+// You may use, distribute and modify this code under the
+// terms of the MIT license, for details, see LICENCE.md
 #include <stdio.h>
 #include <stdlib.h>
 #include <pathfinding.h>
@@ -5,13 +9,12 @@
 
 int main()
 {
-    //da2-map/w_sundermount.map
     int row, col, src, tar;
     FILE* map_src = fopen("da2-map/ht_0_hightown_a2.map", "r");
     fscanf(map_src, "type octile\nheight %d\nwidth %d\nmap\n", &row, &col);
-    // read in map as a string
+    // read in map from file as a string
     char* str_m = (char*)malloc(row * col * sizeof(char)), tmp;
-    int cnt = 0;  // iteration counter through the the file
+    int cnt = 0;  // iteration counter through the file
     while ((tmp = fgetc(map_src)) != EOF) {
         if (tmp == '\n')  continue;
         if (tmp == 's')  src = cnt;
@@ -30,11 +33,21 @@ int main()
     load_map(m, row, col);
     set_src_tar(src, tar);
     float cost;
-    time_t begin = time(NULL);
+    //time_t begin = time(NULL);
+    #ifdef dijkstra_D
+    cost = dijkstra();
+    #endif
+    #ifdef a_star_D
+    cost = a_star();
+    #endif
+    #ifdef jump_point_search_D
     cost = jump_point_search();
-    time_t end = time(NULL);
-    printf("%.1f, it runs in %lf s\n", cost, difftime(end, begin));
-    write_path(str_m);
+    #endif
+    //time_t end = time(NULL);
+    if (cost >= 0) {
+        printf("Path found with %.1f cost.\nSee details in output.txt.\n", cost);
+        write_path(str_m);
+    } else  printf("Path not found.\n");
     free(str_m);
     free(m);
 

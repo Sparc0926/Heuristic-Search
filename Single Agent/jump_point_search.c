@@ -1,6 +1,8 @@
+// Copyright (C) March 2025 杨锦熠 - All rights reserved
+//
+// You may use, distribute and modify this code under the
+// terms of the MIT license, for details, see LICENCE.md
 #include <pathfinding.h>
-#include <iheap.h>
-#include <stdio.h>
 
 #define H_U (m[i - col].s == BLKED && m[i - col + dx[d_i]].s != BLKED)
 #define H_D (m[i + col].s == BLKED && m[i + col + dx[d_i]].s != BLKED)
@@ -9,12 +11,11 @@
 #define D_A (m[i - dx[d_i]].s == BLKED && m[i - dx[d_i] + dy[d_i]].s != BLKED && m[i + dy[d_i]].s != BLKED)
 #define D_C (m[i - dy[d_i]].s == BLKED && m[i + dx[d_i] - dy[d_i]].s != BLKED && m[i + dx[d_i]].s != BLKED)
 
-static iheap _iheap;
 static float _cmp(int i, int j)
     { return m[i].g + m[i].h - m[j].g - m[j].h; }
 
 static int jp_buf;
-// new directions of different initial direction and forced nerghbors
+// new directions nased on forced nerghbors
 static char new_d_1[8] = {  2,   8, 8,  2,  8, 128,  32, 32},
             new_d_2[8] = {128, 128, 2, 32, 32,   8, 128,  2};
 
@@ -29,12 +30,12 @@ static void update_cell(int cur, int suc, float w)
         set_h(suc, OCTILE);
         m[suc].s = VISED;
         m[suc].p = cur;
-        iheap_push(&_iheap, suc);
+        iheap_push(&ih, suc);
     }
     else if (m[suc].s == VISED && w < m[suc].g) {
         m[suc].g = w;
         m[suc].p = cur;
-        iheap_update(&_iheap, suc);
+        iheap_update(&ih, suc);
     }
 }
 
@@ -83,15 +84,15 @@ static int push_jp(int cur, int d_i)
 
 float jump_point_search()
 {
-    create_iheap(&_iheap, row * col, _cmp);
+    create_iheap(&ih, row * col, _cmp);
     m[src].g = 0;
     set_h(src, OCTILE);
     for (int i = 0; i < 8; i++)
         push_jp(jp_buf = src, i);
-    while (_iheap.cnt) {  // heap not empty
-        int cur = iheap_pop(&_iheap);
+    while (ih.cnt) {  // heap not empty
+        int cur = iheap_pop(&ih);
         if (cur == tar) {
-            destroy_iheap(&_iheap);
+            destroy_iheap(&ih);
             return m[tar].g;
         }
         m[cur].s = EXPND;
@@ -100,6 +101,6 @@ float jump_point_search()
                 push_jp(jp_buf = cur, i);
         }
     }
-    destroy_iheap(&_iheap);
+    destroy_iheap(&ih);
     return -1.0f;
 }

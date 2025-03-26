@@ -1,7 +1,9 @@
+// Copyright (C) March 2025 杨锦熠 - All rights reserved
+//
+// You may use, distribute and modify this code under the
+// terms of the MIT license, for details, see LICENCE.md
 #include <pathfinding.h>
-#include <iheap.h>
 
-static iheap _iheap;
 static float _cmp(int i, int j)
     { return m[i].g - m[j].g; }
 
@@ -15,24 +17,24 @@ static void update_cell(int cur, int suc, float w)
         m[suc].g = w;
         m[suc].s = VISED;
         m[suc].p = cur;
-        iheap_push(&_iheap, suc);
+        iheap_push(&ih, suc);
     }
     else if (m[suc].s == VISED && w < m[suc].g) {
         m[suc].g = w;
         m[suc].p = cur;
-        iheap_update(&_iheap, suc);
+        iheap_update(&ih, suc);
     }
 }
 
 float dijkstra()
 {
-    create_iheap(&_iheap, row * col, _cmp);
+    create_iheap(&ih, row * col, _cmp);
     m[src].g = 0;
-    iheap_push(&_iheap, src);
-    while (_iheap.cnt) {  // heap not empty
-        int cur = iheap_pop(&_iheap);
+    iheap_push(&ih, src);
+    while (ih.cnt) {  // heap not empty
+        int cur = iheap_pop(&ih);
         if (cur == tar) {
-            destroy_iheap(&_iheap);
+            destroy_iheap(&ih);
             return m[tar].g;
         }
         m[cur].s = EXPND;
@@ -43,6 +45,6 @@ float dijkstra()
             );
         }
     }
-    destroy_iheap(&_iheap);
+    destroy_iheap(&ih);
     return -1.0f;
 }

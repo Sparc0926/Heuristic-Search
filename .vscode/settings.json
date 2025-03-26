@@ -1,5 +1,5 @@
 {
     "files.associations": {
-        "map": "c"
+        "pathfinding.h": "c"
     }
 }

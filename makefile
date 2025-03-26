@@ -1,29 +1,54 @@
-WARN = -Wall
-OPTM = -O2 -flto
+#-------------------------------------------------------
+# Copyright (C) March 2025 杨锦熠 - All rights reserved
+#
+# You may use, distribute and modify this code under the
+# terms of the MIT license, for details, see LICENCE.md
+#-------------------------------------------------------
+
+# override of built macros
+CC = @ gcc
+CFLAGS = -I ./ -Wall -Wno-unused-result -O2 -flto
+LINK.c = $(CC) $(CFLAGS)
+COMPILE.c = $(LINK.c) -c
+RM = @ rm -f
+# algorithms to file
+dij = dijkstra
+bfs = breadth_first_search
+a* = a_star
+jps = jump_point_search
+ca* = cooperative_a_star
+cbs = conflict_based_search
 
 all:
-	@ rm -f *.o
+	@ echo "Please specify an algorithm to run:"
+	@ echo "To run Dijkstra's algorithm ---- type [make dij]."
+	@ echo "To run Breadth First Search ---- type [make bfs]."
+	@ echo "To run A* algorithm ------------ type [make a* ]."
+	@ echo "To run Jump Point Search ------- type [make jps]."
+	@ echo "To run Cooperative A* ---------- type [make ca*]."
+	@ echo "To run Conflict Based Search --- type [make cbs]."
+	$(RM) *.o a.exe
 
-dij: main.o iheap.o pathfinding.o
-	@ gcc -I ./ $(WARN) $(OPTM) -c "Single Agent"/dijkstra.c -o dijkstra.o
-	@ gcc $(WARN) $(OPTM) $^ dijkstra.o -o a.exe
-	@ rm -f *.o
+dij: iheap.o pathfinding.o
+	$(COMPILE.c) "Single Agent"/$($@).c -o $($@).o
+	$(CC) -D $($@)_D $(CFLAGS) -c main.c -o main.o
+	$(LINK.c) *.o -o a.exe
+	@ echo "Running Dijkstra"
+	@ ./a.exe
+	$(RM) *.o a.exe
 
-a*: main.o iheap.o pathfinding.o
-	@ gcc -I ./ $(WARN) $(OPTM) -c "Single Agent"/a_star.c -o a_star.o
-	@ gcc $(WARN) $(OPTM) $^ a_star.o -o a.exe
-	@ rm -f *.o
+a*: iheap.o pathfinding.o
+	$(COMPILE.c) "Single Agent"/$($@).c -o $($@).o
+	$(CC) -D $($@)_D $(CFLAGS) -c main.c -o main.o
+	$(LINK.c) *.o -o a.exe
+	@ echo "Running A*"
+	@ ./a.exe
+	$(RM) *.o a.exe
 
-jps: main.o iheap.o pathfinding.o
-	@ gcc -I ./ $(WARN) $(OPTM) -c "Single Agent"/jump_point_search.c -o jump_point_search.o
-	@ gcc $(WARN) $(OPTM) $^ jump_point_search.o -o a.exe
-	@ rm -f *.o
-
-pathfinding.o:
-	@ gcc -I ./ $(WARN) $(OPTM) -c pathfinding.c -o $@
-
-iheap.o:
-	@ gcc -I ./ $(WARN) $(OPTM) -c iheap.c -o $@
-
-main.o:
-	@ gcc -I ./ $(WARN) $(OPTM) -c main.c -o $@
+jps: iheap.o pathfinding.o
+	$(COMPILE.c) "Single Agent"/$($@).c -o $($@).o
+	$(CC) -D $($@)_D $(CFLAGS) -c main.c -o main.o
+	$(LINK.c) *.o -o a.exe
+	@ echo "Running Jump Point Search"
+	@ ./a.exe
+	$(RM) *.o a.exe
