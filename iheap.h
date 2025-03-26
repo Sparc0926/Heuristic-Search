@@ -1,4 +1,4 @@
-// Copyright (C) March 2025 杨锦熠 - All rights reserved
+// Copyright (C) 2025 杨锦熠 - All rights reserved
 //
 // You may use, distribute and modify this code under the
 // terms of the MIT license, for details, see LICENCE.md
