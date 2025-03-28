@@ -61,12 +61,12 @@ void write_path(char* map)
     for(int i = 0; i < row; i++) {
         for (int j = 0; j < col; j++) {
             switch (map[j + i * col]) {
-                case 'T': fprintf(f, "0 255 0 "); break;
+                case 'T': fprintf(f, "100 255 100 "); break;
                 case '@': fprintf(f, "125 125 125 "); break;
                 case '.': fprintf(f, "255 255 255 "); break;
                 case 'v': fprintf(f, "255 200 0 "); break;
-                case 'e': fprintf(f, "255 0 0 "); break;
-                case 'p': fprintf(f, "100 100 255 "); break;
+                case 'e': fprintf(f, "255 75 75 "); break;
+                case 'p': fprintf(f, "0 0 0 "); break;
                 default: fprintf(f, "255 255 255 "); break;
             }
         }

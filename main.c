@@ -9,6 +9,7 @@
 
 int main()
 {
+    //da2-map/ht_0_hightown_a2.map
     int row, col, src, tar;
     FILE* map_src = fopen("da2-map/ht_0_hightown_a2.map", "r");
     fscanf(map_src, "type octile\nheight %d\nwidth %d\nmap\n", &row, &col);
@@ -33,7 +34,7 @@ int main()
     load_map(m, row, col);
     set_src_tar(src, tar);
     float cost = 0.0f;
-    //time_t begin = time(NULL);
+    time_t begin = clock();
     #ifdef dijkstra_D
     cost = dijkstra();
     #endif
@@ -43,9 +44,9 @@ int main()
     #ifdef jump_point_search_D
     cost = jump_point_search();
     #endif
-    //time_t end = time(NULL);
+    time_t end = clock();
     if (cost >= 0) {
-        printf("Path found with %.1f cost.\nSee details in output.txt.\n", cost);
+        printf("Path found with %.1f cost and %ld time.\nSee details in output.ppm.\n", cost, end - begin);
         write_path(str_m);
     } else  printf("Path not found.\n");
     free(str_m);
