@@ -1,3 +1,7 @@
+// Copyright (C) 2025 Jarry Yang - All rights reserved
+//
+// You may use, distribute and modify this code under the
+// terms of the MIT license, for details, see LICENCE.md
 #include <pathfinding.h>
 
 static int agt = 2, s[2] = {55, 70}, t[2] = {49, 31};
