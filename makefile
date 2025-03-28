@@ -17,6 +17,13 @@ S = Single-Agent
 M = Multi-Agent
 
 all:
+	@ echo "Please specify an algorithm to run:"
+	@ echo "To run Dijkstra's algorithm ---- type [make dij]."
+	@ echo "To run Breadth First Search ---- type [make bfs]."
+	@ echo "To run A* algorithm ------------ type [make ast]."
+	@ echo "To run Jump Point Search ------- type [make jps]."
+	@ echo "To run Cooperative Search ------ type [make cps]."
+	@ echo "To run Conflict Based Search --- type [make cbs]."
 	$(RM) -f *.o *.exe *.ppm
 
 cps: $(M)/cooperative_search.o
