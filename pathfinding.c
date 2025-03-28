@@ -26,8 +26,8 @@ void set_src_tar(int src_, int tar_)
 
 void set_h(int cur, enum h_type h_t)
 {
-    int delta_x = tar % col - cur % col,
-        delta_y = ABS(tar - col) / col;
+    int delta_x = ABS(tar % col - cur % col),
+        delta_y = ABS(tar / col - cur / col);
     delta_x = ABS(delta_x);
     switch (h_t) {
         case MANHATTAN: {

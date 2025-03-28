@@ -46,7 +46,7 @@ int main()
     #endif
     time_t end = clock();
     if (cost >= 0) {
-        printf("Path found with %.1f cost and %ld time.\nSee details in output.ppm.\n", cost, end - begin);
+        printf("Path found with %.1f cost and %ld CPU clocks.\nSee details in output.ppm.\n", cost, end - begin);
         write_path(str_m);
     } else  printf("Path not found.\n");
     free(str_m);

@@ -9,7 +9,7 @@
 
 #define SQRT_2     1.5f
 #define MIN(A, B)  ((A) < (B) ? (A) : (B))
-#define MAX(A, B)  ((A) < (B) ? (B) : (A))
+#define MAX(A, B)  ((A) > (B) ? (A) : (B))
 #define ABS(A)     ((A) < 0 ? -(A) : (A))
 #define NORM(A)    ((A) < 0 ? -1 : (A) ? 1 : 0)
 
