@@ -37,15 +37,13 @@ float a_star()
         if (cur == tar) {
             destroy_iheap(&ih);
             return m[tar].g;
-        }
-        m[cur].s = EXPND;
+        }  m[cur].s = EXPND;
         for (int i = 0; i < 8; i++) {
             update_cell(cur,
                 cur + dx[i] + dy[i],
                 m[cur].g + (i & 1 ? SQRT_2 : 1.0f)
             );
         }
-    }
-    destroy_iheap(&ih);
+    } destroy_iheap(&ih);
     return -1.0f;
 }

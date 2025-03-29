@@ -1,4 +1,4 @@
-// Copyright (C) 2025 Jarry Yang - All rights reserved
+// Copyright (C) 2025 杨锦熠 - All rights reserved
 //
 // You may use, distribute and modify this code under the
 // terms of the MIT license, for details, see LICENCE.md
@@ -21,8 +21,7 @@ int main()
         if (tmp == 's')  src = cnt;
         else if (tmp == 't')  tar = cnt;
         str_m[cnt++] = tmp;
-    }
-    fclose(map_src);
+    } fclose(map_src);
     // convert string into struct map
     struct map* m = (struct map*)malloc(row * col * sizeof(struct map));
     str_m[src] = str_m[tar] = '.';

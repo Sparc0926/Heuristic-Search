@@ -8,10 +8,17 @@
 struct map* m = (void*)0;  // map to be searched on
 int row, col;              // number of rows and columns of map
 int src, tar;              // source and target index
+
+#ifdef SINGLE_AGENT
 iheap ih;                  // index heap used in search
-// directions that a cell can reach
-int dx[9] = { 1,  1,  0, -1, -1, -1, 0, 1, 0},
-    dy[9] = { 0, -1, -1, -1,  0,  1, 1, 1, 0};
+char dx[8] = { 1,  1,  0, -1, -1, -1, 0, 1};
+int  dy[8] = { 0, -1, -1, -1,  0,  1, 1, 1};
+#endif//SINGLE_AGENT
+
+#ifdef MULTI_AGENT
+char dx[9] = { 1,  1,  0, -1, -1, -1, 0, 1, 0};
+int  dy[9] = { 0, -1, -1, -1,  0,  1, 1, 1, 0};
+#endif//MULTI_AGENT
 
 void load_map(struct map* m_, int row_, int col_)
 {
@@ -50,14 +57,12 @@ void write_path(char* map)
             case VISED: map[i] = 'v'; break;
             case EXPND: map[i] = 'e'; break;
         }
-    }
-    for (int i = tar; i != src; i = m[i].p) {
+    } for (int i = tar; i != src; i = m[i].p) {
         int dx_ = NORM(m[i].p % col - i % col),
             dy_ = NORM(m[i].p / col - i / col);
         for (int j = i; j != m[i].p; j += dx_ + dy_ * col)
             map[j] = 'p';
-    }
-    map[src] = 's', map[tar] = 't';
+    } map[src] = 's', map[tar] = 't';
     for(int i = 0; i < row; i++) {
         for (int j = 0; j < col; j++) {
             switch (map[j + i * col]) {
@@ -69,8 +74,6 @@ void write_path(char* map)
                 case 'p': fprintf(f, "0 0 0 "); break;
                 default: fprintf(f, "255 255 255 "); break;
             }
-        }
-        fprintf(f, "\n");
-    }
-    fclose(f);
+        } fprintf(f, "\n");
+    } fclose(f);
 }

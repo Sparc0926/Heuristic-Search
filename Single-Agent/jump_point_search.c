@@ -77,8 +77,7 @@ static int push_jp(int cur, int d_i)
             update_cell(cur, i, m[jp_buf].g + ABS(cur / col - jp_buf / col) * SQRT_2 + ABS(i - cur) / col);
             return 1;
         }
-    }
-    return 0;
+    } return 0;
 }
 
 float jump_point_search()
@@ -93,13 +92,11 @@ float jump_point_search()
         if (cur == tar) {
             destroy_iheap(&ih);
             return m[tar].g;
-        }
-        m[cur].s = EXPND;
+        } m[cur].s = EXPND;
         for (int i = 0; i < 8; i++) {
             if (m[cur].d >> i & 1)
                 push_jp(jp_buf = cur, i);
         }
-    }
-    destroy_iheap(&ih);
+    } destroy_iheap(&ih);
     return -1.0f;
 }

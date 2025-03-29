@@ -13,22 +13,35 @@
 #define ABS(A)     ((A) < 0 ? -(A) : (A))
 #define NORM(A)    ((A) < 0 ? -1 : (A) ? 1 : 0)
 
+#define SINGLE_AGENT
+
 //------------------------- general attributes -------------------------//
+
 enum status { UNVIS, VISED, EXPND, BLKED = 4 };
 enum h_type { MANHATTAN, OCTILE };
 struct map {
-    float g, h;       // g value and h value
-    enum status s;    // status
-    int p;            // parent
-    unsigned char d;  // bitmask of directions (in index of dx[], dy[]])
+    float g, h;        // g value and h value
+    enum status s;     // status
+    int p;             // parent
+    unsigned char d;   // bitmask of directions (in index of dx[], dy[]])
 };
-extern struct map* m;      // map to be searched on
-extern int row, col;       // number of rows, columns and agents
-extern int src, tar;       // indices of source and target cells
-extern iheap ih;           // index heap used in search
-extern int dx[9], dy[9];   // 8 directions an agend will go
+extern struct map* m;  // map to be searched on
+extern int row, col;   // number of rows, columns and agents
+extern int src, tar;   // indices of source and target cells
+extern iheap ih;       // index heap used in search
+
+#ifdef SINGLE_AGENT
+extern char dx[8];
+extern int  dy[8];
+#endif//SINGLE_AGENT
+
+#ifdef MULTI_AGENT
+extern char dx[9];
+extern int  dy[9];
+#endif//MULTI_AGENT
 
 //-------------------------- general functions ---------------------------//
+
 /// @brief initialize m, row, col with a specific map
 /// @param m_ pointer to map array
 /// @param row_ number of rows of the map
@@ -47,23 +60,17 @@ void set_src_tar(int src_, int tar_);
 void set_h(int cur, enum h_type h_t);
 
 //------------------ single agent pathfinding algorithms -----------------//
+
 /// @brief find the shortest path from src to tar
 /// @return minimal cost if path found, -1.0f if not found
 float dijkstra();
-/// @brief find the shortest path from src to tar
-/// @return minimal cost if path found, -1.0f if not found
 float breadth_first_search();
-/// @brief find the shortest path from src to tar
-/// @return minimal cost if path found, -1.0f if not found
 float depth_first_search();
-/// @brief find the shortest path from src to tar
-/// @return minimal cost if path found, -1.0f if not found
 float a_star();
-/// @brief find the shortest path from src to tar
-/// @return minimal cost if path found, -1.0f if not found
 float jump_point_search();
 
 //------------------ multi agent pathfinding algorithms ------------------//
+
 float cooperative_based_search();
 float conflict_based_search();
 

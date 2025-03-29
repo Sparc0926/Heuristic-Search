@@ -12,8 +12,7 @@ static void clear_map()
     while (i--) {
         m[i].s &= 4;
         m[i].g = 0;
-    }
-    for (int i = tar; i != src; i = m[i].p) {
+    } for (int i = tar; i != src; i = m[i].p) {
         int dx_ = NORM(m[i].p % col - i % col),
             dy_ = NORM(m[i].p / col - i / col) * col;
         for (int j = i; j != m[i].p; j += dx_ + dy_)
@@ -27,8 +26,7 @@ float cooperative_search()
     set_src_tar(s[0], t[0]);
     float sum = jump_point_search();
     if (sum < 0.0f)  return -1.0f;
-    do {
-        clear_map();
+    do { clear_map();
         set_src_tar(s[i], t[i]);
         float cost = jump_point_search();
         if (cost >= 0.0f)  sum += cost;
