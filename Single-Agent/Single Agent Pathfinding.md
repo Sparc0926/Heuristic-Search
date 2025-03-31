@@ -1,35 +1,32 @@
 # Single Agent Pathfinding
 
-## Dijkstra
+## Some Variations of A*
 
-All single agent pathfinding algorithms evolve from Dijkstra's algorithm, which follows the logic below.
+### Hierarchical A* (HA*)
 
-1. Push `src` into heap
-2. Pop and return `cur`
-3. Examine through it's neighbors
-    1. Ignore if it's expanded
-    2. Update `g` value if it's visited
-    3. Push it if it's unvisited
-4. If `cur == tar`, return it's `g` value
+This approach aims to reduce the time of computing `h` value for each node.
 
+Definition (Valtorta's Barrier)
+: The number of nodes expanded when blindly searching in a space.
 
+## Jump Point Search (JPS) - Best for Static Map
 
-## Breadth First Search
-
-The container for BFS is a queue. Here we implement it with an array and two pointers to it's head an tail.
-
-```c
-int queue[height * width], head = 0, tail = 0;
-```
-
-The **push** operation is `queue[++tail] = target;` and **pop** is simply `head++;`.
-
-Lemma
-: 
-
-## Jump Point Search (JPS)
+As the expanded set of A* algorithm contains multiple shortest paths, are there any ways to prune it so as to speed it up?
 
 ### Neighbor Pruing
+
+Let's call those shortest paths **symmetric** as they act the same role consider the simplest case symmetric paths take place, 9-grid map.
+
+#### Straight Move
+
+The following map is represented by `m[0 : 8]` where `m[3]` is just expanded, hence `m[3].g` is minimized, and it's currently evaluating `m[4]`.
+
+| @  |  @ |  @ |
+|---|---|---|
+|  d |  e |  f |
+| g  |  h | i  |
+
+Notice that there are two 
 
 Definition (Dominated Neighbor)
 : $m[suc]$ is **dominated** if exists a cheaper or equal path from $m[cur.p]$ to $m[suc]$ bypassing $m[cur]$.

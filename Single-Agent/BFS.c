@@ -4,7 +4,7 @@
 // terms of the MIT license, for details, see LICENCE.md
 #include <pathfinding.h>
 
-float breadth_first_search()
+float search()
 {
     int queue[row * col], head = 0, tail = 0;
     queue[0] = src;

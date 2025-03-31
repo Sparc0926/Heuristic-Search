@@ -42,39 +42,26 @@ extern int  dy[9];
 
 //-------------------------- general functions ---------------------------//
 
-/// @brief initialize m, row, col with a specific map
-/// @param m_ pointer to map array
-/// @param row_ number of rows of the map
-/// @param col_ number of columns of the map
+/// @brief initialize m with a string mask file
+/// @param m_name the string mask file name
 /// @note this should be called before any related functions
-void load_map(struct map* m_, int row_, int col_);
-/// @brief set indices of source and target cell
-/// @param src_ index of source cell
-/// @param tar_ index of target cell
-/// @note this should be called right after load_map
-/// @note and before any pathfinding functions
-void set_src_tar(int src_, int tar_);
-/// @brief compute and set m[cur].h based on specific h_type
-/// @param cur index of current cell
+void load_map_static(char* m_name);
+void unload_map();
+/// @brief precompute and set h value for every cell based on specific h_type
 /// @param h_t type of heuristic function
 void set_h(int cur, enum h_type h_t);
-
-//------------------ single agent pathfinding algorithms -----------------//
-
+/// @brief update attributes of m[suc]
+/// @param cur index of current cell
+/// @param suc index of successor cell
+/// @param w new cost from m[src] to m[suc]
+void update_cell(int cur, int suc, float w);
 /// @brief find the shortest path from src to tar
 /// @return minimal cost if path found, -1.0f if not found
-float dijkstra();
-float breadth_first_search();
-float depth_first_search();
-float a_star();
-float jump_point_search();
+float search();
 
-//------------------ multi agent pathfinding algorithms ------------------//
-
-float cooperative_based_search();
-float conflict_based_search();
+// TODO
 
 //--------------------------- debug functions ----------------------------//
-void write_path(char* map);
+//void write_path(char* map);
 
 #endif//PATHFINDING_H

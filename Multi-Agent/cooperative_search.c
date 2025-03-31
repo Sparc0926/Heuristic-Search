@@ -10,9 +10,11 @@ static void clear_map()
 {
     int i = row * col;
     while (i--) {
-        m[i].s &= 4;
-        m[i].g = 0;
-    } for (int i = tar; i != src; i = m[i].p) {
+        m[i].s &= 4;  // set non-blocked cells unvisited
+        m[i].g = 0;   // set g value to 0
+    }
+    // add walls on former agent's path
+    for (int i = tar; i != src; i = m[i].p) {
         int dx_ = NORM(m[i].p % col - i % col),
             dy_ = NORM(m[i].p / col - i / col) * col;
         for (int j = i; j != m[i].p; j += dx_ + dy_)

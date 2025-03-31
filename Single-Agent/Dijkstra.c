@@ -7,41 +7,21 @@
 static float _cmp(int i, int j)
     { return m[i].g - m[j].g; }
 
-/// @brief update attributes of m[suc]
-/// @param cur index of current cell
-/// @param suc index of successor cell
-/// @param w new cost from m[src] to m[suc]
-static void update_cell(int cur, int suc, float w)
-{
-    if (m[suc].s == UNVIS) {
-        m[suc].g = w;
-        m[suc].s = VISED;
-        m[suc].p = cur;
-        iheap_push(&ih, suc);
-    } else if (m[suc].s == VISED && w < m[suc].g) {
-        m[suc].g = w;
-        m[suc].p = cur;
-        iheap_update(&ih, suc);
-    }
-}
-
-float dijkstra()
+float search()
 {
     create_iheap(&ih, row * col, _cmp);
-    m[src].g = 0;
     iheap_push(&ih, src);
     while (ih.cnt) {  // heap not empty
         int cur = iheap_pop(&ih);
         if (cur == tar) {
             destroy_iheap(&ih);
             return m[tar].g;
-        } m[cur].s = EXPND;
-        for (int i = 0; i < 8; i++) {
+        } for (int i = 0; i < 8; i++) {
             update_cell(cur,
                 cur + dx[i] + dy[i],
                 m[cur].g + (i & 1 ? SQRT_2 : 1.0f)
             );
-        }
+        } m[cur].g = -2.0f;  // mark as expanded
     } destroy_iheap(&ih);
     return -1.0f;
 }

@@ -6,40 +6,34 @@
 #-------------------------------------------------------
 
 # override built macros
-CC = @ gcc
-CFLAGS = -I ./ -Wall -Wno-unused-result -Wno-switch -O2 -flto
+CC =@ clang
+CFLAGS = -I ./ -Wall -Wno-unused-result -Wno-switch -O2
 LINK.c = $(CC) $(CFLAGS)
 COMPILE.c = $(LINK.c) -c
 OUTPUT_OPTION = -o $(@F)
 RM = @ rm -f
-# folder name for short
-S = Single-Agent
-M = Multi-Agent
 
-all:
-	@ echo "Please specify an algorithm to run:"
-	@ echo "To run Dijkstra's algorithm ---- type [make dij]."
-	@ echo "To run Breadth First Search ---- type [make bfs]."
-	@ echo "To run A* algorithm ------------ type [make ast]."
-	@ echo "To run Jump Point Search ------- type [make jps]."
-	@ echo "To run Cooperative Search ------ type [make cps]."
-	@ echo "To run Conflict Based Search --- type [make cbs]."
-	$(RM) -f *.o *.exe *.ppm
+all: clean
+	@ echo "Please specify an algorithm to compile:"
+	@ echo "To compile Dijkstra's algorithm ---- type [make dij]."
+	@ echo "To compile Breadth First Search ---- type [make bfs]."
+	@ echo "To compile A* algorithm ------------ type [make ast]."
+	@ echo "To compile Jump Point Search ------- type [make jps]."
+	@ echo "To compile Cooperative Search ------ type [make cps]."
+	@ echo "To compile Conflict Based Search --- type [make cbs]."
 
-cps: $(M)/cooperative_search.o
-	$(COMPILE.c) -D $($@)_D main.c -o main.o
+dij: Single-Agent/Dijkstra clean
+bfs: Single-Agent/BFS clean
+ast: Single-Agent/Astar clean
+jps: Single-Agent/JPS clean
 
-cbs: $(M)/confilct_based_search.o
-	$(COMPILE.c) -D $($@)_D main.c -o main.o
+cps: Multi-Agent/CPS Single-Agent/JPS clean
+cbs: Multi-Agent/CBS clean
 
-%: $(S)/%.o iheap.o pathfinding.o
-	$(CC) -D $@_D $(CFLAGS) -c main.c -o main.o
+%: %.o iheap.o pathfinding.o main.o
 	$(LINK.c) *.o -o a.exe
-	@ echo "Running $@"
-	@ ./a.exe
-	$(RM) -f *.o *.exe
+	
+%: %.c
 
-dij: dijkstra
-bfs: breadth_first_search
-ast: a_star
-jps: jump_point_search
+clean:
+	$(RM) -f *.o *.ppm
