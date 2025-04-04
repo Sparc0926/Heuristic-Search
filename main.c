@@ -9,7 +9,7 @@
 int main(void)
 {
     //da2-map/ht_0_hightown_a2.map
-    load_map_static("da2-map/ht_0_hightown_a2.map");
+    load_map_static("dao-map/arena.map");
     // begin pathfinding
     float cost = 0.0f;
     time_t begin = clock();

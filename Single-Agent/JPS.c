@@ -3,7 +3,6 @@
 // You may use, distribute and modify this code under the
 // terms of the MIT license, for details, see LICENCE.md
 #include <pathfinding.h>
-#include <stdio.h>
 
 #define H_U (m[i - col].g == -1.0f && m[i - col + dx[d_i]].g != -1.0f)
 #define H_D (m[i + col].g == -1.0f && m[i + col + dx[d_i]].g != -1.0f)

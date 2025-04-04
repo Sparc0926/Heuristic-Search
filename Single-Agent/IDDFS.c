@@ -13,10 +13,8 @@ float search()
         for (int j = 0; j < 8; j++) {
             update_cell()
         }
-    }
-    while (cur != tar) {
+    } while (cur != tar) {
         cur = iheap_pop(&ih);
         iheap_push(&ih, m[iheap_pop(&ih)].g + );
-    }
-    destroy_iheap(&ih);
+    } destroy_iheap(&ih);
 }

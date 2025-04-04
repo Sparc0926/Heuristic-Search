@@ -18,6 +18,7 @@ all: clean
 	@ echo "To compile Dijkstra's algorithm ---- type [make dij]."
 	@ echo "To compile Breadth First Search ---- type [make bfs]."
 	@ echo "To compile A* algorithm ------------ type [make ast]."
+	@ echo "To compile A* algorithm ------------ type [make ida]."
 	@ echo "To compile Jump Point Search ------- type [make jps]."
 	@ echo "To compile Cooperative Search ------ type [make cps]."
 	@ echo "To compile Conflict Based Search --- type [make cbs]."
@@ -25,6 +26,7 @@ all: clean
 dij: Single-Agent/Dijkstra clean
 bfs: Single-Agent/BFS clean
 ast: Single-Agent/Astar clean
+ida: Single-Agent/IDAstar clean
 jps: Single-Agent/JPS clean
 
 cps: Multi-Agent/CPS Single-Agent/JPS clean
