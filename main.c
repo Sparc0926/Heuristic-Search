@@ -3,22 +3,26 @@
 // You may use, distribute and modify this code under the
 // terms of the MIT license, for details, see LICENCE.md
 #include <stdio.h>
-#include <pathfinding.h>
+#include <graph.h>
 #include <time.h>
 
 int main(void)
 {
-    //da2-map/ht_0_hightown_a2.map
-    load_map_static("test.map");
-    // begin pathfinding
-    float cost = 0.0f;
-    time_t begin = clock();
-    cost = search();
-    time_t end = clock();
-    if (cost >= 0) {
-        printf("Path found with %.1f cost and %ld CPU clocks.\nSee details in output.ppm.\n", cost, end - begin);
-    } else  printf("Path not found.\n");
-    unload_map();
-    
+    printf("1\n");
+    int n, m, src, tar;
+    FILE* in_file = fopen("test0.txt", "r");
+    fscanf(in_file, "%d%d%d%d", &n, &m, &src, &tar);
+    float h_list[n];
+    for (int i = 0; i < n; i++)
+        fscanf(in_file, "%f", h_list + i);
+    new_graph(n, m, h_list);
+    for (int i = 0; i < m; i++) {
+        int a, b;
+        float w;
+        fscanf(in_file, "%d%d%f", &a, &b, &w);
+        add_edge(a, b, w);
+    }
+    fclose(in_file);
+    print_graph();
     return 0;
 }

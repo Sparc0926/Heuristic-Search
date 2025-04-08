@@ -4,16 +4,16 @@
 // terms of the MIT license, for details, see LICENCE.md
 #include <iheap.h>
 
-void create_iheap(iheap* heap, int size, cmp_ cmp)
-{
-    heap->head = (int*)malloc(sizeof(int) * (size + 1));
-    heap->hash = (int*)malloc(sizeof(int) * size);
+struct iheap* new_iheap(int size, float(*cmp)(int, int)) {
+    struct iheap* heap = malloc(sizeof(struct iheap));
+    heap->head = malloc(sizeof(int) * (size + 1));
+    heap->hash = malloc(sizeof(int) * size);
     heap->cnt = 0;
     heap->cmp = cmp;
+    return heap;
 }
 
-void iheap_update(iheap* heap, int tar)
-{
+void iheap_update(struct iheap* heap, int tar) {
     int i = heap->hash[tar];
     while (i != 1 && heap->cmp(tar, heap->head[i >> 1]) < 0) {
         heap->head[i] = heap->head[i >> 1];
@@ -24,8 +24,7 @@ void iheap_update(iheap* heap, int tar)
     heap->hash[tar] = i;
 }
 
-void iheap_push(iheap* heap, int tar)
-{
+void iheap_push(struct iheap* heap, int tar) {
     int i = ++heap->cnt;
     while (i >> 1 && heap->cmp(tar, heap->head[i >> 1]) < 0) {
         heap->head[i] = heap->head[i >> 1];
@@ -36,8 +35,7 @@ void iheap_push(iheap* heap, int tar)
     heap->hash[tar] = i;
 }
 
-int iheap_pop(iheap* heap)
-{
+int iheap_pop(struct iheap* heap) {
     int popped = heap->head[1];    // popped element
     int last = heap->head[heap->cnt--];
     int i = 1, j = heap->cnt >> 1;
@@ -58,14 +56,7 @@ int iheap_pop(iheap* heap)
     return popped;
 }
 
-void destroy_iheap(iheap* heap)
-{
-    if (heap->head) {
-        free(heap->head);
-        heap->head = (void*)0;
-    }
-    if (heap->hash) {
-        free(heap->hash);
-        heap->hash = (void*)0;
-    }
+void delete_iheap(struct iheap* heap) {
+    if (heap->head) { free(heap->head); heap->head = 0; }
+    if (heap->hash) { free(heap->hash); heap->hash = 0; }
 }
