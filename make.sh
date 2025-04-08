@@ -1,6 +1,6 @@
 compile() {
     for i in $@; do
-        clang -I. -Wall -O2 -c $i.c -o $i.o
+        clang -I. -Wall -O2 -c $i.c -o $(basename $i).o
     done
 }
 
@@ -9,5 +9,5 @@ link() {
     rm -f *.o
 }
 
-compile iheap graph main
+compile iheap graph Single-Agent/Astar main
 link

@@ -5,23 +5,34 @@
 #include <graph.h>
 
 static float _cmp(int i, int j)
-    { return m[i].g + m[i].h - m[j].g - m[j].h; }
+    { return nodes[i].g + nodes[i].h - nodes[j].g - nodes[j].h; }
 
-float search()
+float search(int src, int tar)
 {
-    struct iheap* ih = new_iheap(node_cnt)
-    iheap_push(&ih, src);
-    while (ih.cnt) {  // heap not empty
-        int cur = iheap_pop(&ih);
+    struct iheap* ih = new_iheap(node_cnt, _cmp);
+    nodes[src].g = 0.0f;
+    iheap_push(ih, src);
+    while (ih->cnt) {  // iheap not empty
+        int cur = iheap_pop(ih);
+        printf("%d: %f\n", cur, nodes[cur].g + nodes[cur].h);
         if (cur == tar) {
-            
-            return m[tar].g;
-        } for (int i = 0; i < 8; i++) {
-            update_cell(cur,
-                cur + dx[i] + dy[i],
-                m[cur].g + (i & 1 ? SQRT_2 : 1.0f)
-            );
-        } m[cur].g = -2.0f;
+            delete_iheap(ih);
+            return nodes[tar].g;
+        }
+        for (int i = nodes[cur].first_edge_id; i != -1; i = edges[i].next_edge_id) {
+            int suc = edges[i].to_node_id;
+            if (nodes[suc].g == 3.40282347e+38f) {
+                nodes[suc].g = nodes[cur].g + edges[i].w;
+                nodes[suc].p = cur;
+                iheap_push(ih, suc);
+            } else if (nodes[cur].g + edges[i].w < nodes[suc].g) {
+                nodes[suc].g = nodes[cur].g + edges[i].w;
+                nodes[suc].p = cur;
+                iheap_update(ih, suc);
+            }
+        }
+        nodes[cur].g = -1.0f;
     }
+    delete_iheap(ih);
     return -1.0f;
 }
