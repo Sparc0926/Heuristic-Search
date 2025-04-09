@@ -6,10 +6,10 @@
 #include <graph.h>
 #include <time.h>
 
-int main(void)
+int main(int arg_cnt, char** arg_val)
 {
     int n, m;
-    FILE* in_file = fopen("testcases/test1.txt", "r");
+    FILE* in_file = fopen(arg_val[0], "r");
     fscanf(in_file, "%d%d%d%d", &n, &m, &src, &tar);
     float h_list[n];
     for (int i = 0; i < n; i++)

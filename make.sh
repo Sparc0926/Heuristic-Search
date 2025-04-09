@@ -9,5 +9,5 @@ link() {
     rm -f *.o
 }
 
-compile iheap graph Single-Agent/Astar main
+compile iheap graph Single-Agent/IDAstar main
 link

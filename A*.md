@@ -14,7 +14,7 @@ Since it expands nodes based on $g$ values, what if we change $g$ value computat
 
 ```c
 static float _cmp(int i, int j)
-    { return m[i].g + m[i].h - m[j].g - m[j].h; }
+    { return nodes[i].g + nodes[i].h - nodes[j].g - nodes[j].h; }
 ```
 
 This changes the expansion to base on $g+h$ value of each node (i.e. $f$ value).

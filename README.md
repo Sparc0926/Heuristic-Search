@@ -1,3 +1,3 @@
-# Pathfinding On Gridded Maps
+# Heuristic Search
 
-Pathfinding algorithms on gridded maps are special from those on general graphs and can be further optimized. Here I implemented algorithms for both single agend and multi agend pathfinding cases. For running the program, simply typing `make`.
+Heuristic searches apply heiristic functions, known as *h values* to each node, to guide the search. There are two family of heuristic searches, *A** modified from Dijkstra's algorithm, and *IDA** modified from IDDFS with *f_bound* instead of *g_bound*.
